@@ -1,6 +1,9 @@
 package project.domain.entity;
 
-public abstract class Person {
+import project.domain.enums.AccountType;
+import java.util.*;
+
+public class Person {
 
     protected String id;
     protected String username;
@@ -25,6 +28,22 @@ public abstract class Person {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.role = role;
+    }
+
+    /**
+     * Constructor to insert and update
+     * 
+     * @param inputs
+     */
+    public Person(List<String> data) {
+        this.id = data.get(0);
+        this.username = data.get(1);
+        this.password = data.get(2);
+        this.fullName = data.get(3);
+        this.gender = data.get(4);
+        this.phoneNumber = data.get(5);
+        this.email = data.get(6);
+        this.role = data.get(7);
     }
 
     public String getId() {

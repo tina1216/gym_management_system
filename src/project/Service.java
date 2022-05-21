@@ -98,7 +98,7 @@ public class Service {
      * 
      * @param accountType
      */
-    public void viewAccount(AccountType accountType) {
+    public void listAccount(AccountType accountType) {
         switch (accountType) {
             case MANAGER:
                 Utils.viewData(MANAGER_FILE, accountType);
@@ -114,7 +114,23 @@ public class Service {
         }
     }
 
-    public void updateAccount(AccountType accountType) {
+    public void viewAccount(List<String> data) {
+        Person person = new Person(data);
+        System.out.println(person.getUsername());
+        System.out.println(person.getPassword());
+        System.out.println(person.getFullName());
+        System.out.println(person.getGender());
+        System.out.println(person.getPhoneNumber());
+        System.out.println(person.getEmail());
+
+        if (data.get(data.size() - 1).equals(AccountType.TRAINER.getRole())) {
+            Trainer trainer = new Trainer(data);
+            System.out.println(trainer.getTrainer_level());
+
+        }
+    }
+
+    public void updateAccount() {
 
         viewAccount(accountType);
 
@@ -122,12 +138,15 @@ public class Service {
         messages.add("Enter user ID that will be edited: ");
         String updateUserId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
 
+    
         switch (accountType) {
             case MANAGER:
-                Utils.updateData(MANAGER_FILE, updateUserId);
+                List<String> target = Utils.searchData(MANAGER_FILE, updateUserId);
+                Utils.viewData(MANAGER_FILE, accountType)
+                Utils.updateData(MANAGER_FILE, );
                 break;
             case TRAINER:
-                Utils.updateData(TRAINER_FILE, updateUserId);
+                Utils.updateData(TRAINER_FILE, Utils.searchData(MANAGER_FILE, updateUserId));
                 break;
             case CUSTOMER:
                 Utils.updateData(CUSTOMER_FILE, updateUserId);

@@ -15,14 +15,14 @@ public class Utils {
      * @param filePath
      * @return a list that contains each line from the .txt file
      */
-    public static List<String[]> scanFile(String filePath) {
-        List<String[]> lines = new ArrayList<String[]>();
+    public static List<List<String>> scanFile(String filePath) {
+        List<List<String>> lines = new ArrayList<List<String>>();
 
         try (Scanner scanner = new Scanner(new File(filePath))) {
             // scanner.useDelimiter("\n");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                lines.add(line.trim().split("\\s*,\\s*"));
+                lines.add(Arrays.asList(line.trim().split("\\s*,\\s*")));
             }
 
         } catch (FileNotFoundException e) {
@@ -103,13 +103,13 @@ public class Utils {
      * @return new data
      */
     public static List<List<String>> deleteData(String filePath, String id) {
-        List<String[]> oldData = scanFile(filePath);
+        List<List<String>> oldData = scanFile(filePath);
         List<List<String>> newData = new ArrayList<List<String>>();
 
-        for (String[] line : oldData) {
-            if (!line[0].equals(id)) {
+        for (List<String> line : oldData) {
+            if (!line.get(0).equals(id)) {
                 // add all into newData except the one that will be deleted
-                newData.add(Arrays.asList(line));
+                newData.add(line);
             }
         }
 
@@ -137,11 +137,11 @@ public class Utils {
      * @return all data in txt file
      */
     public static List<List<String>> viewData(String filePath, AccountType accountType) {
-        List<String[]> data = scanFile(filePath);
+        List<List<String>> data = scanFile(filePath);
         List<List<String>> result = new ArrayList<List<String>>();
 
         data.forEach(line -> {
-            result.add(Arrays.asList(line));
+            result.add(line);
         });
 
         for (int i = 0; i < result.size(); i++) {
@@ -177,44 +177,26 @@ public class Utils {
      * @param data
      * @return updated data
      */
-    // List<String>
-    public static void updateData(String filePath, String id) {
-        List<String> messages = new ArrayList<String>();
-
-        List<String[]> oldData = scanFile(filePath);
+    public static List<List<String>> updateData(String filePath, List<String> data) {
+        List<List<String>> oldData = scanFile(filePath);
         List<List<String>> updatedData = new ArrayList<List<String>>();
 
-        for (int i = 0; i < oldData.size(); i++) {
-            if (oldData.get(i)[0].equals(id)) {
-                messages.add("Enter the word to change from: ");
-                String changeThis = Utils.readInputs("", messages).get(0);
-
-                if (oldData.get(i).toString().contains(changeThis)) {
-                    messages.add("Change to: ");
-                    String changeToThis = Utils.readInputs("", messages).get(0);
-                    oldData.get(i).toString().replaceFirst(changeThis, changeToThis);
-                    // updatedData.add(Arrays.asList(oldData.get(i)));
-                } else {
-                    System.out.println("Invalid input.");
-                }
+        for (List<String> line : oldData) {
+            if (line.get(0).equals(data.get(0))) {
+                oldData.remove(line);
+                updatedData.add(data);
+            } else {
+                updatedData.add(line);
             }
-            updatedData.add(Arrays.asList(oldData.get(i)));
         }
 
         clearData(filePath);
 
-        File file = new File(filePath);
-
-        try {
-            FileWriter fileWriter = new FileWriter(file, false);
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         updatedData.forEach(line -> {
             createData(filePath, line);
         });
+
+        return updatedData;
     }
 
     /**
@@ -229,7 +211,6 @@ public class Utils {
 
         try {
             FileWriter fileWriter = new FileWriter(file, false);
-            fileWriter.write("");
             fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,27 +224,25 @@ public class Utils {
      * @param name
      * @return results
      */
-    public static List<List<String>> searchData(String filePath, String name) {
-        List<String[]> data = scanFile(filePath);
-        List<List<String>> searchResults = new ArrayList<List<String>>();
+    public static List<String> searchData(String filePath, String id) {
+        List<List<String>> data = scanFile(filePath);
 
-        for (String[] line : data) {
-            if (line[3].equals(name)) {
-                searchResults.add(Arrays.asList(line));
+        for (List<String> line : data) {
+            if (line.get(0).equals(id)) {
+                return line;
             }
         }
-
-        return searchResults;
+        return null;
     }
 
     // -------------------------------------------------------------
     public static List<List<String>> displayData(String filePath, DocumentType documentType) {
-        List<String[]> data = scanFile(filePath);
+        List<List<String>> data = scanFile(filePath);
         List<List<String>> results = new ArrayList<List<String>>();
 
         data.forEach(line -> {
-            results.add(Arrays.asList(line));
-        });
+            results.add(line);
+        });// delete
 
         for (int i = 0; i < results.size(); i++) {
             System.out.println("id: " + results.get(i).toString().split(",")[0]);

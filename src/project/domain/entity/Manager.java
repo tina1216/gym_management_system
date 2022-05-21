@@ -15,7 +15,7 @@ public class Manager extends Person {
     }
 
     /**
-     * Constructor to read
+     * Constructor for reading in
      * 
      * @param line
      */
@@ -30,8 +30,15 @@ public class Manager extends Person {
         this.role = line[7];
     }
 
-    public Manager generateMamager(List<String> inputs) {
+    /**
+     * generateManager for new customer account
+     * 
+     * @param inputs
+     * @return
+     */
+    public Manager generateManager(List<String> inputs) {
         Manager manager = new Manager();
+
         manager.id = UUID.randomUUID().toString();
         manager.username = inputs.get(0);
         manager.password = inputs.get(1);
@@ -41,7 +48,7 @@ public class Manager extends Person {
         manager.email = inputs.get(5);
         manager.role = AccountType.MANAGER.getRole();
 
-        return this;
+        return manager;
     }
 
     public List<String> writeData() {

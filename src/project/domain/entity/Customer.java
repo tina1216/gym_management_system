@@ -27,7 +27,7 @@ public class Customer extends User {
     }
 
     /**
-     * Constructor to read
+     * Constructor for reading in
      * 
      * @param line
      */
@@ -47,23 +47,27 @@ public class Customer extends User {
     }
 
     /**
-     * Constructor to insert and update
+     * generateCustomer for new customer account
      * 
      * @param inputs
      */
-    public Customer(List<String> inputs) {
-        this.id = UUID.randomUUID().toString();
-        this.username = inputs.get(0);
-        this.password = inputs.get(1);
-        this.fullName = inputs.get(2);
-        this.gender = inputs.get(3);
-        this.phoneNumber = inputs.get(4);
-        this.email = inputs.get(5);
-        this.role = AccountType.CUSTOMER.getRole();
-        this.customer_date_joined = LocalDate.now().toString();
-        this.height = Double.parseDouble(inputs.get(6));
-        this.weight = Double.parseDouble(inputs.get(7));
-        this.isPaid = Boolean.parseBoolean(inputs.get(8));
+    public Customer generateCustomer(List<String> inputs) {
+        Customer customer = new Customer();
+
+        customer.id = UUID.randomUUID().toString();
+        customer.username = inputs.get(0);
+        customer.password = inputs.get(1);
+        customer.fullName = inputs.get(2);
+        customer.gender = inputs.get(3);
+        customer.phoneNumber = inputs.get(4);
+        customer.email = inputs.get(5);
+        customer.role = AccountType.CUSTOMER.getRole();
+        customer.customer_date_joined = LocalDate.now().toString();
+        customer.height = Double.parseDouble(inputs.get(6));
+        customer.weight = Double.parseDouble(inputs.get(7));
+        customer.isPaid = Boolean.parseBoolean(inputs.get(8));
+
+        return customer;
     }
 
     // getters & setters

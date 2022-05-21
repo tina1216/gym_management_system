@@ -9,9 +9,7 @@ import project.domain.entity.*;
 public class Context {
 
     private static Context instance = new Context();
-
-    private AccountType accountType;// never change after logged in
-
+    private static AccountType accountType;// never change after logged in
     private List<Manager> managers;
     private List<Trainer> trainers;
     private List<Customer> customers;
@@ -33,7 +31,7 @@ public class Context {
 
     // Used only when login or logout
     public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
+        Context.accountType = accountType;
     }
 
     public List<Manager> getManagers() {

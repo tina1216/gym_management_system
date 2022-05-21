@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import project.domain.enums.AccountType;
-import project.domain.enums.DocumentType;
 
 public class Utils {
     private static final Scanner sc = new Scanner(System.in);
@@ -55,7 +54,6 @@ public class Utils {
             });
 
         } catch (Exception err) {
-            System.out.println("Something went wrong.");
             err.printStackTrace();
         }
         return inputs;
@@ -86,7 +84,6 @@ public class Utils {
                     fileWriter.write("\n");
                 }
             }
-
             fileWriter.close();
 
         } catch (Exception e) {
@@ -113,14 +110,7 @@ public class Utils {
             }
         }
 
-        File file = new File(filePath);
-
-        try {
-            FileWriter fileWriter = new FileWriter(file, false);
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        clearData(filePath);
 
         newData.forEach(line -> {
             createData(filePath, line);
@@ -130,44 +120,15 @@ public class Utils {
     }
 
     /**
-     * view data to display account, appointment and feedback
+     * view data to display matched data
      * 
      * @param filePath
      * @param id
      * @return all data in txt file
      */
-    public static List<List<String>> viewData(String filePath, AccountType accountType) {
+    public static List<List<String>> listAllData(String filePath, AccountType accountType) {
         List<List<String>> data = scanFile(filePath);
-        List<List<String>> result = new ArrayList<List<String>>();
-
-        data.forEach(line -> {
-            result.add(line);
-        });
-
-        for (int i = 0; i < result.size(); i++) {
-            System.out.println("id: " + result.get(i).toString().split(",")[0]);
-            System.out.println("username: " + result.get(i).toString().split(",")[1]);
-            System.out.println("password: " + result.get(i).toString().split(",")[2]);
-            System.out.println("full name: " + result.get(i).toString().split(",")[3]);
-            System.out.println("gender: " + result.get(i).toString().split(",")[4]);
-            System.out.println("phone number: " + result.get(i).toString().split(",")[5]);
-            System.out.println("email: " + result.get(i).toString().split(",")[6]);
-
-            if (accountType == AccountType.TRAINER) {
-                System.out.println("trainer_level: " + result.get(i).toString().split(",")[8]);
-            }
-
-            if (accountType == AccountType.CUSTOMER) {
-                System.out.println("date joined: " + result.get(i).toString().split(",")[9]);
-                System.out.println("height: " + result.get(i).toString().split(",")[10]);
-                System.out.println("weight: " + result.get(i).toString().split(",")[11]);
-                System.out.println("Payment status: " + result.get(i).toString().split(",")[12]);
-            }
-
-            System.out.println("===========================");
-        }
-
-        return result;
+        return data;
     }
 
     /**
@@ -211,6 +172,7 @@ public class Utils {
 
         try {
             FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.write("");
             fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,35 +198,40 @@ public class Utils {
     }
 
     // -------------------------------------------------------------
-    public static List<List<String>> displayData(String filePath, DocumentType documentType) {
-        List<List<String>> data = scanFile(filePath);
-        List<List<String>> results = new ArrayList<List<String>>();
+    // public static List<List<String>> displayData(String filePath, DocumentType
+    // documentType) {
+    // List<List<String>> data = scanFile(filePath);
+    // List<List<String>> results = new ArrayList<List<String>>();
 
-        data.forEach(line -> {
-            results.add(line);
-        });// delete
+    // data.forEach(line -> {
+    // results.add(line);
+    // });// delete
 
-        for (int i = 0; i < results.size(); i++) {
-            System.out.println("id: " + results.get(i).toString().split(",")[0]);
-            System.out.println("date created: " + results.get(i).toString().split(",")[1]);
+    // for (int i = 0; i < results.size(); i++) {
+    // System.out.println("id: " + results.get(i).toString().split(",")[0]);
+    // System.out.println("date created: " +
+    // results.get(i).toString().split(",")[1]);
 
-            if (documentType == DocumentType.BOOKING) {
-                System.out.println("duration: " + results.get(i).toString().split(",")[2]);
-                System.out.println("booked date: " + results.get(i).toString().split(",")[3]);
-                System.out.println("trainer ID: " + results.get(i).toString().split(",")[4]);
-                System.out.println("customer ID: " + results.get(i).toString().split(",")[5]);
-                System.out.println("feedbackId: " + results.get(i).toString().split(",")[6]);
-            }
+    // if (documentType == DocumentType.BOOKING) {
+    // System.out.println("duration: " + results.get(i).toString().split(",")[2]);
+    // System.out.println("booked date: " +
+    // results.get(i).toString().split(",")[3]);
+    // System.out.println("trainer ID: " + results.get(i).toString().split(",")[4]);
+    // System.out.println("customer ID: " +
+    // results.get(i).toString().split(",")[5]);
+    // System.out.println("feedbackId: " + results.get(i).toString().split(",")[6]);
+    // }
 
-            if (documentType == DocumentType.FEEDBACK) {
-                System.out.println("comment: " + results.get(i).toString().split(",")[2]);
-                System.out.println("trainer ID: " + results.get(i).toString().split(",")[3]);
-                System.out.println("customer ID: " + results.get(i).toString().split(",")[4]);
-                System.out.println("booking ID: " + results.get(i).toString().split(",")[5]);
-            }
-        }
+    // if (documentType == DocumentType.FEEDBACK) {
+    // System.out.println("comment: " + results.get(i).toString().split(",")[2]);
+    // System.out.println("trainer ID: " + results.get(i).toString().split(",")[3]);
+    // System.out.println("customer ID: " +
+    // results.get(i).toString().split(",")[4]);
+    // System.out.println("booking ID: " + results.get(i).toString().split(",")[5]);
+    // }
+    // }
 
-        return results;
-    }
+    // return results;
+    // }
 
 }

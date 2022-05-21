@@ -1,6 +1,8 @@
 package project.domain.entity;
 
 import project.domain.enums.AccountType;
+import project.Context;
+
 import java.util.*;
 
 public class Person {
@@ -31,19 +33,39 @@ public class Person {
     }
 
     /**
+     * Constructor to read
+     * 
+     * @param line
+     */
+    public Person(String[] line) {
+        this.id = line[0];
+        this.username = line[1];
+        this.password = line[2];
+        this.fullName = line[3];
+        this.gender = line[4];
+        this.phoneNumber = line[5];
+        this.email = line[6];
+        this.role = line[7];
+    }
+
+    /**
      * Constructor to insert and update
      * 
      * @param inputs
      */
-    public Person(List<String> data) {
-        this.id = data.get(0);
-        this.username = data.get(1);
-        this.password = data.get(2);
-        this.fullName = data.get(3);
-        this.gender = data.get(4);
-        this.phoneNumber = data.get(5);
-        this.email = data.get(6);
-        this.role = data.get(7);
+    public Person generatePerson(List<String> inputs) {
+        Person person = new Person();
+
+        person.id = UUID.randomUUID().toString();
+        person.username = inputs.get(1);
+        person.password = inputs.get(2);
+        person.fullName = inputs.get(3);
+        person.gender = inputs.get(4);
+        person.phoneNumber = inputs.get(5);
+        person.email = inputs.get(6);
+        person.role = Context.getInstance().getAccountType().toString();
+
+        return person;
     }
 
     public String getId() {

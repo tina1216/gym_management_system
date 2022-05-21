@@ -1,30 +1,31 @@
 package project.domain.entity;
 
-import java.io.*;
 import java.time.*;
 import java.util.*;
+import java.text.DateFormat;
 
 public class Feedback {
 
+    Date currentDate = new Date();
     private String id;
     private String dateCreated;
     private String comment;
     private String trainerId;
     private String customerId;
-    private String bookingId;
+    private String sessionId;
 
     public Feedback() {
 
     }
 
     public Feedback(String id, String dateCreated, String comment, String trainerId, String customerId,
-            String bookingId) {
+            String sessionId) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.comment = comment;
         this.trainerId = trainerId;
         this.customerId = customerId;
-        this.bookingId = bookingId;
+        this.sessionId = sessionId;
     }
 
     /**
@@ -38,7 +39,7 @@ public class Feedback {
         this.comment = line[2];
         this.trainerId = line[3];
         this.customerId = line[4];
-        this.bookingId = line[5];
+        this.sessionId = line[5];
     }
 
     /**
@@ -46,13 +47,17 @@ public class Feedback {
      * 
      * @param inputs
      */
-    public Feedback(List<String> inputs) {
-        this.id = UUID.randomUUID().toString();
-        this.dateCreated = LocalDate.now().toString();
-        this.comment = inputs.get(0);
-        this.trainerId = inputs.get(1);
-        this.customerId = inputs.get(2);
-        this.bookingId = inputs.get(3);
+    public Feedback addFeedback(List<String> inputs) {
+        Feedback feedback = new Feedback();
+
+        feedback.id = UUID.randomUUID().toString();
+        feedback.dateCreated = DateFormat.getDateInstance().format(LocalDate.now()).toString();
+        feedback.comment = inputs.get(0);
+        feedback.trainerId = inputs.get(1);
+        feedback.customerId = inputs.get(2);
+        feedback.sessionId = inputs.get(3);
+
+        return feedback;
     }
 
     // -------------------------------------------------------------------------------
@@ -61,7 +66,7 @@ public class Feedback {
         List<String> data = new ArrayList<String>();
 
         data.addAll(new ArrayList<String>(
-                Arrays.asList(String.valueOf(id), dateCreated, comment, trainerId, customerId, bookingId)));
+                Arrays.asList(String.valueOf(id), dateCreated, comment, trainerId, customerId, sessionId)));
         return data;
     }
 
@@ -86,8 +91,8 @@ public class Feedback {
         return customerId;
     }
 
-    public String getBookingId() {
-        return bookingId;
+    public String getSessiongId() {
+        return sessionId;
     }
 
     public void setId(String id) {
@@ -110,8 +115,8 @@ public class Feedback {
         this.customerId = customerId;
     }
 
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
 }

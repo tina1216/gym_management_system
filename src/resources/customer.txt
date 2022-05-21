@@ -1,0 +1,3 @@
+id, test1, 110011, fullName, gender, phoneNumber, email, C, 2007-12-03, 160.5, 60.3, true
+id, test2, 1100, fullName, gender, phoneNumber, email, C, 2007-12-03, 183.5, 70.5, false
+57d02f0a-d492-49aa-a802-a9580b84e12a,cccc,cccccccccc,cccccc,c,1234567,ccc,C,2022-05-21,150.0,50.45,true

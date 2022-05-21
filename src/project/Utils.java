@@ -3,9 +3,8 @@ package project;
 import java.io.*;
 import java.util.*;
 
-import javax.security.auth.login.AccountException;
-
 import project.domain.enums.AccountType;
+import project.domain.enums.DocumentType;
 
 public class Utils {
     private static final Scanner sc = new Scanner(System.in);
@@ -153,6 +152,7 @@ public class Utils {
             System.out.println("gender: " + result.get(i).toString().split(",")[4]);
             System.out.println("phone number: " + result.get(i).toString().split(",")[5]);
             System.out.println("email: " + result.get(i).toString().split(",")[6]);
+
             if (accountType == AccountType.TRAINER) {
                 System.out.println("trainer_level: " + result.get(i).toString().split(",")[8]);
             }
@@ -189,12 +189,13 @@ public class Utils {
                 messages.add("Enter the word to change from: ");
                 String changeThis = Utils.readInputs("", messages).get(0);
 
-                messages.add("Change to: ");
-                String changeToThis = Utils.readInputs("", messages).get(0);
-
                 if (oldData.get(i).toString().contains(changeThis)) {
+                    messages.add("Change to: ");
+                    String changeToThis = Utils.readInputs("", messages).get(0);
                     oldData.get(i).toString().replaceFirst(changeThis, changeToThis);
                     // updatedData.add(Arrays.asList(oldData.get(i)));
+                } else {
+                    System.out.println("Invalid input.");
                 }
             }
             updatedData.add(Arrays.asList(oldData.get(i)));
@@ -253,6 +254,38 @@ public class Utils {
         }
 
         return searchResults;
+    }
+
+    // -------------------------------------------------------------
+    public static List<List<String>> displayData(String filePath, DocumentType documentType) {
+        List<String[]> data = scanFile(filePath);
+        List<List<String>> results = new ArrayList<List<String>>();
+
+        data.forEach(line -> {
+            results.add(Arrays.asList(line));
+        });
+
+        for (int i = 0; i < results.size(); i++) {
+            System.out.println("id: " + results.get(i).toString().split(",")[0]);
+            System.out.println("date created: " + results.get(i).toString().split(",")[1]);
+
+            if (documentType == DocumentType.BOOKING) {
+                System.out.println("duration: " + results.get(i).toString().split(",")[2]);
+                System.out.println("booked date: " + results.get(i).toString().split(",")[3]);
+                System.out.println("trainer ID: " + results.get(i).toString().split(",")[4]);
+                System.out.println("customer ID: " + results.get(i).toString().split(",")[5]);
+                System.out.println("feedbackId: " + results.get(i).toString().split(",")[6]);
+            }
+
+            if (documentType == DocumentType.FEEDBACK) {
+                System.out.println("comment: " + results.get(i).toString().split(",")[2]);
+                System.out.println("trainer ID: " + results.get(i).toString().split(",")[3]);
+                System.out.println("customer ID: " + results.get(i).toString().split(",")[4]);
+                System.out.println("booking ID: " + results.get(i).toString().split(",")[5]);
+            }
+        }
+
+        return results;
     }
 
 }

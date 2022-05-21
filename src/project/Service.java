@@ -14,6 +14,8 @@ public class Service {
     public final static String MANAGER_FILE = "src/resources/manager.txt";
     public final static String TRAINER_FILE = "src/resources/trainer.txt";
     public final static String CUSTOMER_FILE = "src/resources/customer.txt";
+    public final static String BOOKING_FILE = "src/resources/booking.txt";
+    public final static String FEEDBACK_FILE = "src/resources/feedback.txt";
 
     /**
      * login
@@ -176,4 +178,31 @@ public class Service {
         }
     }
 
+    // -------------------------------------------------------------
+    public void createDocument() {
+
+        List<String> attributes = new ArrayList<String>();
+        // id
+        // dateAdded
+        attributes.add("duration");
+        attributes.add("booked date");
+        attributes.add("customer ID");
+        attributes.add("trainer ID");
+
+        List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
+                .collect(Collectors.toList());
+
+        List<String> inputs = Utils.readInputs("=========== Create New Booking ===========", messages);
+
+        Utils.createData(BOOKING_FILE, new Booking(inputs).writeData());
+    }
+
+    public void viewBooking() {
+        Utils.displayData(BOOKING_FILE, DocumentType.BOOKING);
+
+    }
+
+    public void viewFeedback() {
+        Utils.displayData(FEEDBACK_FILE, DocumentType.FEEDBACK);
+    }
 }

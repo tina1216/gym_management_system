@@ -14,6 +14,8 @@ public class Service {
     public final static String MANAGER_FILE = "src/resources/manager.txt";
     public final static String TRAINER_FILE = "src/resources/trainer.txt";
     public final static String CUSTOMER_FILE = "src/resources/customer.txt";
+    public final static String SESSION_FILE = "src/resources/session.txt";
+    public final static String FEEDBACK_FILE = "src/resources/feedback.txt";
 
     /**
      * login
@@ -78,13 +80,13 @@ public class Service {
 
         switch (accountType) {
             case MANAGER:
-                Utils.createData(MANAGER_FILE, new Manager(inputs).writeData());
+                Utils.createData(MANAGER_FILE, new Manager().generateManager(inputs).writeData());
                 break;
             case TRAINER:
-                Utils.createData(TRAINER_FILE, new Trainer(inputs).writeData());
+                Utils.createData(TRAINER_FILE, new Trainer().generateTrainer(inputs).writeData());
                 break;
             case CUSTOMER:
-                Utils.createData(CUSTOMER_FILE, new Customer(inputs).writeData());
+                Utils.createData(CUSTOMER_FILE, new Customer().generateCustomer(inputs).writeData());
                 break;
             default:
                 break;
@@ -96,46 +98,61 @@ public class Service {
      * 
      * @param accountType
      */
-    public void viewAccount(AccountType accountType) {
+    public void listAllAccounts(AccountType accountType) {
         switch (accountType) {
             case MANAGER:
-                Utils.viewData(MANAGER_FILE, accountType);
+                Utils.listAllData(MANAGER_FILE, accountType);
                 break;
             case TRAINER:
-                Utils.viewData(TRAINER_FILE, accountType);
+                Utils.listAllData(TRAINER_FILE, accountType);
                 break;
             case CUSTOMER:
-                Utils.viewData(CUSTOMER_FILE, accountType);
+                Utils.listAllData(CUSTOMER_FILE, accountType);
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * updateAccount
+     * 
+     * @param accountType
+     */
     public void updateAccount(AccountType accountType) {
+        listAllAccounts(accountType);
 
-        viewAccount(accountType);
-
+        List<String> target = null;
         List<String> messages = new ArrayList<String>();
-        messages.add("Enter user ID that will be edited: ");
-        String updateUserId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
+        messages.add("Select user ID to update: ");
+        String userId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
 
         switch (accountType) {
             case MANAGER:
-                Utils.updateData(MANAGER_FILE, updateUserId);
+                target = Utils.searchData(MANAGER_FILE, userId);
+                Utils.updateData(MANAGER_FILE, target);
                 break;
+
             case TRAINER:
-                Utils.updateData(TRAINER_FILE, updateUserId);
+                target = Utils.searchData(TRAINER_FILE, userId);
+                Utils.updateData(TRAINER_FILE, target);
                 break;
+
             case CUSTOMER:
-                Utils.updateData(CUSTOMER_FILE, updateUserId);
+                target = Utils.searchData(CUSTOMER_FILE, userId);
+                Utils.updateData(CUSTOMER_FILE, target);
                 break;
+
             default:
                 break;
         }
-
     }
 
+    /**
+     * deleteAccount
+     * 
+     * @param accountType
+     */
     public void deleteAccount(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
         messages.add("Enter delete target user ID : ");
@@ -156,21 +173,108 @@ public class Service {
         }
     }
 
+    /**
+     * searchAccount
+     * 
+     * @param accountType
+     */
     public void searchAccount(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
-        messages.add("Enter full name to search for: ");
-        String searchBythis = Utils.readInputs("=========== Search Result ===========", messages).get(0);
+        messages.add("Enter user ID to search for: ");
+        String userId = Utils.readInputs("=========== Search Result ===========", messages).get(0);
 
         switch (accountType) {
             case MANAGER:
-                Utils.searchData(MANAGER_FILE, searchBythis).stream().forEach(System.out::println);
+                Utils.searchData(MANAGER_FILE, userId).forEach(System.out::println);
                 break;
+
             case TRAINER:
-                Utils.searchData(TRAINER_FILE, searchBythis).stream().forEach(System.out::println);
+                Utils.searchData(TRAINER_FILE, userId).forEach(System.out::println);
                 break;
+
             case CUSTOMER:
-                Utils.searchData(CUSTOMER_FILE, searchBythis).stream().forEach(System.out::println);
+                Utils.searchData(CUSTOMER_FILE, userId).forEach(System.out::println);
                 break;
+
+            default:
+                break;
+        }
+    }
+
+    // -------------------------------------------------------------
+    /**
+     * createSession
+     */
+    public void createSession() {
+
+        List<String> attributes = new ArrayList<String>();
+        // id
+        // dateAdded
+        attributes.add("duration");
+        attributes.add("booked date");
+        attributes.add("customer ID");
+        attributes.add("trainer ID");
+
+        List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
+                .collect(Collectors.toList());
+
+        List<String> inputs = Utils.readInputs("=========== Create New Booking ===========", messages);
+
+        Utils.createData(SESSION_FILE, new Session().addSession(inputs).writeData());
+    }
+
+    /**
+     * createFeedback
+     */
+    public void createFeedback() {
+        List<String> attributes = new ArrayList<String>();
+        // id
+        // dateAdded
+        attributes.add("comment");
+        attributes.add("trainer ID");
+        attributes.add("customer ID");
+        attributes.add("session ID");
+
+        List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
+                .collect(Collectors.toList());
+
+        List<String> inputs = Utils.readInputs("=========== Create New Feedback ===========", messages);
+
+        Utils.createData(FEEDBACK_FILE, new Feedback().addFeedback(inputs).writeData());
+    }
+
+    public void listAllSessions() {
+        // Utils.listAllData(SESSION_FILE, null);
+    }
+
+    public void listAllFeedbacks() {
+        // Utils.listAllData(FEEDBACK_FILE, null);
+    }
+
+    public void updateInfo() {
+        listAllAccounts(accountType);
+
+        List<String> target = null;
+        List<String> messages = new ArrayList<String>();
+        messages.add("Select user ID to update: ");
+        String userId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
+
+        switch (accountType) {
+            case MANAGER:
+                target = Utils.searchData(MANAGER_FILE, userId);
+                Utils.updateData(MANAGER_FILE, target);
+                break;
+
+            case TRAINER:
+                target = Utils.searchData(TRAINER_FILE, userId);
+                Utils.updateData(TRAINER_FILE, target);
+                break;
+
+            case CUSTOMER:
+                target = Utils.searchData(CUSTOMER_FILE, userId);
+                Utils.updateData(CUSTOMER_FILE, target);
+                break;
+
             default:
                 break;
         }

@@ -33,10 +33,11 @@ public class Controller {
         System.out.println(ManagerChoice.findByCode(choice).getMsg());
         switch (choice) {
             case 1:
+                // manager
                 service.createAccount(AccountType.MANAGER);
                 break;
             case 2:
-                service.viewAccount(AccountType.MANAGER);
+                service.listAllAccounts(AccountType.MANAGER);
                 break;
             case 3:
                 service.updateAccount(AccountType.MANAGER);
@@ -48,10 +49,11 @@ public class Controller {
                 service.searchAccount(AccountType.MANAGER);
                 break;
             case 6:
+                // trainer
                 service.createAccount(AccountType.TRAINER);
                 break;
             case 7:
-                service.viewAccount(AccountType.TRAINER);
+                service.listAllAccounts(AccountType.TRAINER);
                 break;
             case 8:
                 service.updateAccount(AccountType.TRAINER);
@@ -63,10 +65,11 @@ public class Controller {
                 service.searchAccount(AccountType.TRAINER);
                 break;
             case 11:
+                // customer
                 service.createAccount(AccountType.CUSTOMER);
                 break;
             case 12:
-                service.viewAccount(AccountType.CUSTOMER);
+                service.listAllAccounts(AccountType.CUSTOMER);
                 break;
             case 13:
                 service.updateAccount(AccountType.CUSTOMER);
@@ -87,9 +90,49 @@ public class Controller {
 
     private void trainerMenu(int choice) {
         System.out.println(TrainerChoice.findByCode(choice).getMsg());
+        switch (choice) {
+            case 1:
+                // Update customer's individual profile
+                break;
+            case 2:
+                //// Create each appointment
+                break;
+            case 3:
+                //// display Individual appointment
+                break;
+            case 4:
+                //// update Individual appointment
+                break;
+            case 5:
+                //// delete Individual appointment
+                break;
+            case 6:
+                // Update customer's payment status
+                break;
+            case 7:
+                // Give feedback to customer"
+                break;
+            case 0:
+                service.logout();
+                break;
+            default:
+                break;
+        }
     }
 
     private void CustomerMenu(int choice) {
         System.out.println(CustomerChoice.findByCode(choice).getMsg());
+
+        switch (choice) {
+            case 1:
+                // View my profile
+                break;
+            case 2:
+                // View my feedback from trainer
+                break;
+            case 0:
+                service.logout();
+                break;
+        }
     }
 }

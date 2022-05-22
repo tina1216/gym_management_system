@@ -15,7 +15,7 @@ public class Manager extends Person {
     }
 
     /**
-     * Constructor to read
+     * Constructor for reading in
      * 
      * @param line
      */
@@ -31,19 +31,24 @@ public class Manager extends Person {
     }
 
     /**
-     * Constructor to insert and update
+     * generateManager for new customer account
      * 
      * @param inputs
+     * @return
      */
-    public Manager(List<String> inputs) {
-        this.id = UUID.randomUUID().toString();
-        this.username = inputs.get(0);
-        this.password = inputs.get(1);
-        this.fullName = inputs.get(2);
-        this.gender = inputs.get(3);
-        this.phoneNumber = inputs.get(4);
-        this.email = inputs.get(5);
-        this.role = AccountType.MANAGER.getRole();
+    public Manager generateManager(List<String> inputs) {
+        Manager manager = new Manager();
+
+        manager.id = UUID.randomUUID().toString();
+        manager.username = inputs.get(0);
+        manager.password = inputs.get(1);
+        manager.fullName = inputs.get(2);
+        manager.gender = inputs.get(3);
+        manager.phoneNumber = inputs.get(4);
+        manager.email = inputs.get(5);
+        manager.role = AccountType.MANAGER.getRole();
+
+        return manager;
     }
 
     public List<String> writeData() {

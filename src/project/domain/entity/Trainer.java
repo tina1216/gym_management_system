@@ -18,7 +18,7 @@ public class Trainer extends Person {
     }
 
     /**
-     * Constructor to read
+     * Constructor for reading in
      * 
      * @param line
      */
@@ -35,20 +35,23 @@ public class Trainer extends Person {
     }
 
     /**
-     * Constructor to insert and update
+     * generateTrainer for new customer account
      * 
      * @param inputs
      */
-    public Trainer(List<String> inputs) {
-        this.id = UUID.randomUUID().toString();
-        this.username = inputs.get(0);
-        this.password = inputs.get(1);
-        this.fullName = inputs.get(2);
-        this.gender = inputs.get(3);
-        this.phoneNumber = inputs.get(4);
-        this.email = inputs.get(5);
-        this.role = AccountType.TRAINER.getRole();
-        this.trainer_level = Integer.parseInt(inputs.get(6));
+    public Trainer generateTrainer(List<String> inputs) {
+        Trainer trainer = new Trainer();
+
+        trainer.id = UUID.randomUUID().toString();
+        trainer.username = inputs.get(0);
+        trainer.password = inputs.get(1);
+        trainer.fullName = inputs.get(2);
+        trainer.gender = inputs.get(3);
+        trainer.phoneNumber = inputs.get(4);
+        trainer.email = inputs.get(5);
+        trainer.role = AccountType.MANAGER.getRole();
+
+        return trainer;
     }
 
     // -------------------------------------------------------------

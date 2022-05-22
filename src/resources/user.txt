@@ -1,0 +1,6 @@
+001, 1, 1111, manager 1, male, 123-456-289, test@test.com, M
+002, 2, 1111, manager 2, female, 123-456-289,test@test.com, M
+003, 3, 1111, trainer 1, NA, 123-456-289,test@test.com, T
+004, 4, 1111, trainer 2, male, 123-456-289,test@test.com, T
+005, 5, 1111, customer 1, male, 123-456-289,test@test.com, C
+006, 6, 1111, customer 2, female, 123-456-289,test@test.com, C

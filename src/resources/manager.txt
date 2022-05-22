@@ -1,2 +1,0 @@
-001,tina,1212,Tina Sekiya,gender,phoneNumber,email,M
-002,mgk,1010,Colson Baker,,NA,phoneNumber,email,M

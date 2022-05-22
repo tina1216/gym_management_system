@@ -33,22 +33,3 @@ public enum CustomerChoice {
     }
 
 }
-
-/**
- * switch(choice) {
- * case 1:
- * //"View my profile"
- * break;
- * case 2:
- * //"View my feedback from trainer"
- * break;
- * case 3:
- * //"Back to Main page"
- * break;
- * default:
- * break;
- * }
- * }
- * 
- * 
- */

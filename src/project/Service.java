@@ -101,13 +101,13 @@ public class Service {
     public void listAllAccounts(AccountType accountType) {
         switch (accountType) {
             case MANAGER:
-                Utils.listAllData(MANAGER_FILE, accountType);
+                Utils.listAllData(MANAGER_FILE);
                 break;
             case TRAINER:
-                Utils.listAllData(TRAINER_FILE, accountType);
+                Utils.listAllData(TRAINER_FILE);
                 break;
             case CUSTOMER:
-                Utils.listAllData(CUSTOMER_FILE, accountType);
+                Utils.listAllData(CUSTOMER_FILE);
                 break;
             default:
                 break;
@@ -124,7 +124,7 @@ public class Service {
 
         List<String> target = null;
         List<String> messages = new ArrayList<String>();
-        messages.add("Select user ID to update: ");
+        messages.add("Select ID to update: ");
         String userId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
 
         switch (accountType) {
@@ -155,7 +155,7 @@ public class Service {
      */
     public void deleteAccount(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
-        messages.add("Enter delete target user ID : ");
+        messages.add("Enter ID to delete: ");
         String deleteUserId = Utils.readInputs("=========== Delete Account ===========", messages).get(0);
 
         switch (accountType) {
@@ -180,7 +180,7 @@ public class Service {
      */
     public void searchAccount(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
-        messages.add("Enter user ID to search for: ");
+        messages.add("Enter ID to search for: ");
         String userId = Utils.readInputs("=========== Search Result ===========", messages).get(0);
 
         switch (accountType) {
@@ -243,38 +243,58 @@ public class Service {
         Utils.createData(FEEDBACK_FILE, new Feedback().addFeedback(inputs).writeData());
     }
 
-    public void listAllSessions() {
-        // Utils.listAllData(SESSION_FILE, null);
-    }
+    /**
+     * displayInfo to show all data from either session.txt or feedback.txt
+     */
+    public void displayInfo() {
 
-    public void listAllFeedbacks() {
-        // Utils.listAllData(FEEDBACK_FILE, null);
     }
 
     public void updateInfo() {
-        listAllAccounts(accountType);
-
         List<String> target = null;
         List<String> messages = new ArrayList<String>();
-        messages.add("Select user ID to update: ");
-        String userId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
+        String userInput;
+
+        messages.add("1.Training Session\n2.Feedback\n Select a number above: ");
+        String userChoice = Utils.readInputs("", messages).get(0);
+
+        switch (Integer.parseInt(userChoice)) {
+            case 1:
+                Utils.listAllData(SESSION_FILE);
+                messages.add("Select ID to update: ");
+                userInput = Utils.readInputs("", messages).get(0);
+                target = Utils.searchData(SESSION_FILE, userInput);
+                Utils.updateData(SESSION_FILE, target);
+                break;
+
+            case 2:
+                Utils.listAllData(FEEDBACK_FILE);
+                messages.add("Select ID to update: ");
+                userInput = Utils.readInputs("", messages).get(0);
+                target = Utils.searchData(SESSION_FILE, userInput);
+                Utils.updateData(SESSION_FILE, target);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * deleteInfo to delete session or feedback
+     */
+    public void deleteInfo() {
+        List<String> messages = new ArrayList<String>();
+        messages.add("Enter ID to delete: ");
+        String deleteUserId = Utils.readInputs("=========== Delete Account ===========", messages).get(0);
 
         switch (accountType) {
             case MANAGER:
-                target = Utils.searchData(MANAGER_FILE, userId);
-                Utils.updateData(MANAGER_FILE, target);
+                Utils.deleteData(MANAGER_FILE, deleteUserId);
                 break;
-
             case TRAINER:
-                target = Utils.searchData(TRAINER_FILE, userId);
-                Utils.updateData(TRAINER_FILE, target);
+                Utils.deleteData(TRAINER_FILE, deleteUserId);
                 break;
-
-            case CUSTOMER:
-                target = Utils.searchData(CUSTOMER_FILE, userId);
-                Utils.updateData(CUSTOMER_FILE, target);
-                break;
-
             default:
                 break;
         }

@@ -7,6 +7,7 @@ import java.text.DateFormat;
 public class Feedback {
 
     Date currentDate = new Date();
+
     private String id;
     private String dateCreated;
     private String comment;
@@ -84,10 +85,16 @@ public class Feedback {
     }
 
     public String getTrainerId() {
+        // Context.getInstance().getCustomer() して、
+        // filter で id 検索かけて（findByCode）して
+        // return は Customer
         return trainerId;
     }
 
     public String getCustomerId() {
+        // Context.getInstance().getCustomer() して、
+        // filter で id 検索かけて（findByCode）して
+        // return は Customer
         return customerId;
     }
 

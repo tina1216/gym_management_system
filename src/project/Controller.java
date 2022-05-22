@@ -92,25 +92,25 @@ public class Controller {
         System.out.println(TrainerChoice.findByCode(choice).getMsg());
         switch (choice) {
             case 1:
-                // Update customer's individual profile
+                // Update customer's info
+                service.updateAccount(AccountType.CUSTOMER);
                 break;
             case 2:
-                //// Create each appointment
+                // Create session
+                service.createSession();
                 break;
             case 3:
-                //// display Individual appointment
+                // display sessions
                 break;
             case 4:
-                //// update Individual appointment
+                // update session
                 break;
             case 5:
-                //// delete Individual appointment
+                // delete session
                 break;
             case 6:
-                // Update customer's payment status
-                break;
-            case 7:
-                // Give feedback to customer"
+                // create feedback for customer
+                service.createFeedback();
                 break;
             case 0:
                 service.logout();
@@ -126,6 +126,7 @@ public class Controller {
         switch (choice) {
             case 1:
                 // View my profile
+                service.searchAccount(AccountType.CUSTOMER);
                 break;
             case 2:
                 // View my feedback from trainer

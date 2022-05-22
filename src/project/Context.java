@@ -10,6 +10,7 @@ public class Context {
 
     private static Context instance = new Context();
     private static AccountType accountType;// never change after logged in
+
     private List<Manager> managers;
     private List<Trainer> trainers;
     private List<Customer> customers;

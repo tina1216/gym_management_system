@@ -60,6 +60,25 @@ public class Utils {
     }
 
     /**
+     * clear data to clean up all data in the file
+     * 
+     * @param filePath
+     * @param id
+     * @return
+     */
+    private static void clearData(String filePath) {
+        File file = new File(filePath);
+
+        try {
+            FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.write("");
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * create data to create account, appointment and feedback
      * 
      * @param filePath
@@ -120,13 +139,13 @@ public class Utils {
     }
 
     /**
-     * view data to display matched data
+     * listAllData to display all data
      * 
      * @param filePath
      * @param id
      * @return all data in txt file
      */
-    public static List<List<String>> listAllData(String filePath, AccountType accountType) {
+    public static List<List<String>> listAllData(String filePath) {
         List<List<String>> data = scanFile(filePath);
         return data;
     }
@@ -161,25 +180,6 @@ public class Utils {
     }
 
     /**
-     * clear data to clean up all data in the file
-     * 
-     * @param filePath
-     * @param id
-     * @return
-     */
-    private static void clearData(String filePath) {
-        File file = new File(filePath);
-
-        try {
-            FileWriter fileWriter = new FileWriter(file, false);
-            fileWriter.write("");
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * search data
      * 
      * @param filePath
@@ -198,40 +198,5 @@ public class Utils {
     }
 
     // -------------------------------------------------------------
-    // public static List<List<String>> displayData(String filePath, DocumentType
-    // documentType) {
-    // List<List<String>> data = scanFile(filePath);
-    // List<List<String>> results = new ArrayList<List<String>>();
-
-    // data.forEach(line -> {
-    // results.add(line);
-    // });// delete
-
-    // for (int i = 0; i < results.size(); i++) {
-    // System.out.println("id: " + results.get(i).toString().split(",")[0]);
-    // System.out.println("date created: " +
-    // results.get(i).toString().split(",")[1]);
-
-    // if (documentType == DocumentType.BOOKING) {
-    // System.out.println("duration: " + results.get(i).toString().split(",")[2]);
-    // System.out.println("booked date: " +
-    // results.get(i).toString().split(",")[3]);
-    // System.out.println("trainer ID: " + results.get(i).toString().split(",")[4]);
-    // System.out.println("customer ID: " +
-    // results.get(i).toString().split(",")[5]);
-    // System.out.println("feedbackId: " + results.get(i).toString().split(",")[6]);
-    // }
-
-    // if (documentType == DocumentType.FEEDBACK) {
-    // System.out.println("comment: " + results.get(i).toString().split(",")[2]);
-    // System.out.println("trainer ID: " + results.get(i).toString().split(",")[3]);
-    // System.out.println("customer ID: " +
-    // results.get(i).toString().split(",")[4]);
-    // System.out.println("booking ID: " + results.get(i).toString().split(",")[5]);
-    // }
-    // }
-
-    // return results;
-    // }
 
 }

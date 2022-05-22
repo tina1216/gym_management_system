@@ -2,11 +2,16 @@ package project.domain.entity;
 
 import java.time.*;
 import java.util.*;
+
+import javax.naming.Context;
+import javax.swing.text.AbstractDocument.Content;
+
 import java.text.DateFormat;
 
 public class Session {
 
     Date currentDate = new Date();
+
     private String id;
     private String dateCreated;
     private int duration;
@@ -103,10 +108,19 @@ public class Session {
     }
 
     public String getTrainerId() {
+        // Context.getInstance().getCustomer() して、
+        // filter で id 検索かけて（findByCode）して
+        // return は Trainer
+
         return trainerId;
     }
 
     public String getCustomerId() {
+        // Context.getInstance().getCustomer() して、
+        // filter で id 検索かけて（findByCode）して
+        // return は Customer
+        // Customer customer = Context.getInstance().getCustomers()
+        // .filter(customers -> customers.findByCode().getCustomerId());
         return customerId;
     }
 

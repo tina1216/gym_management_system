@@ -85,9 +85,6 @@ public class Feedback {
     }
 
     public String getTrainerId() {
-        // Context.getInstance().getCustomer() して、
-        // filter で id 検索かけて（findByCode）して
-        // return は Customer
         return trainerId;
     }
 

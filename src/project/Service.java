@@ -14,7 +14,7 @@ public class Service {
     public final static String MANAGER_FILE = "src/resources/manager.txt";
     public final static String TRAINER_FILE = "src/resources/trainer.txt";
     public final static String CUSTOMER_FILE = "src/resources/customer.txt";
-    public final static String SESSION_FILE = "src/resources/session.txt";
+    public final static String BOOKING_FILE = "src/resources/session.txt";
     public final static String FEEDBACK_FILE = "src/resources/feedback.txt";
 
     /**
@@ -30,12 +30,6 @@ public class Service {
                         password.equals(e.getPassword()))
                 .findFirst()
                 .ifPresent(person -> Context.getInstance().setAccountType(AccountType.fromRole(person.getRole())));
-
-        // Context.getInstance().getPeople().forEach(e -> {
-        // if (username.equals(e.getUsername()) && password.equals(e.getPassword())) {
-        // Context.getInstance().setAccountType(AccountType.fromRole(e.getRole()));
-        // }
-        // });
     }
 
     /**
@@ -124,28 +118,57 @@ public class Service {
 
         List<String> target = null;
         List<String> messages = new ArrayList<String>();
+
         messages.add("Select ID to update: ");
         String userId = Utils.readInputs("=========== Update Account ===========", messages).get(0);
 
         switch (accountType) {
             case MANAGER:
-                target = Utils.searchData(MANAGER_FILE, userId);
+                target = askToUpdate(accountType, userId);
                 Utils.updateData(MANAGER_FILE, target);
                 break;
 
             case TRAINER:
-                target = Utils.searchData(TRAINER_FILE, userId);
+                target = askToUpdate(accountType, userId);
                 Utils.updateData(TRAINER_FILE, target);
                 break;
 
             case CUSTOMER:
-                target = Utils.searchData(CUSTOMER_FILE, userId);
+                target = askToUpdate(accountType, userId);
                 Utils.updateData(CUSTOMER_FILE, target);
                 break;
 
             default:
                 break;
         }
+    }
+
+    public List<String> askToUpdate(AccountType accountType, String id) {
+        List<String> attributes = new ArrayList<String>();
+
+        attributes.add(id);
+        attributes.add("username");
+        attributes.add("password");
+        attributes.add("full name");
+        attributes.add("gender");
+        attributes.add("phone number");
+        attributes.add("email");
+        // role
+
+        if (accountType == AccountType.TRAINER) {
+            attributes.add("trainer level");
+        }
+        if (accountType == AccountType.CUSTOMER) {
+            // customer_date_joined
+            attributes.add("height");
+            attributes.add("weight");
+            attributes.add("paid");
+        }
+
+        List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
+                .collect(Collectors.toList());
+        List<String> inputs = Utils.readInputs("", messages);
+        return inputs;
     }
 
     /**
@@ -220,7 +243,7 @@ public class Service {
 
         List<String> inputs = Utils.readInputs("=========== Create New Booking ===========", messages);
 
-        Utils.createData(SESSION_FILE, new Session().addSession(inputs).writeData());
+        Utils.createData(BOOKING_FILE, new Session().addSession(inputs).writeData());
     }
 
     /**
@@ -249,7 +272,7 @@ public class Service {
     public void listAllInfo(AccountType accountType) {
         switch (accountType) {
             case TRAINER:
-                Utils.listAllData(SESSION_FILE);
+                Utils.listAllData(BOOKING_FILE);
                 break;
             case CUSTOMER:
                 Utils.listAllData(FEEDBACK_FILE);
@@ -263,23 +286,19 @@ public class Service {
         List<String> target = null;
         List<String> messages = new ArrayList<String>();
         String userInput, userId;
-        Trainer trainer = new Trainer();
 
         switch (accountType) {
             case TRAINER:
-                // Context.getInstance().getPeople().stream().filter(e ->
-                // username.equals(e.getUsername()) &&password.equals(e.getPassword()))
-
-                // trainer = Context.getInstance().getTrainers().filter();
-                // Utils.searchData(SESSION_FILE, userId);
+                userId = Context.getInstance().getCurrUserId();
+                Utils.searchData(BOOKING_FILE, userId);
                 messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
-                target = Utils.searchData(SESSION_FILE, userInput);
-                Utils.updateData(SESSION_FILE, target);
+                target = Utils.searchData(BOOKING_FILE, userInput);
+                Utils.updateData(BOOKING_FILE, target);
                 break;
 
             case CUSTOMER:
-                // Utils.searchData(FEEDBACK_FILE, userId);
+                userId = Context.getInstance().getCurrUserId();
                 messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(FEEDBACK_FILE, userInput);
@@ -300,17 +319,34 @@ public class Service {
 
         switch (accountType) {
             case TRAINER:
-                // Utils.listAllData(SESSION_FILE);
+                searchMyData(accountType);
                 messages.add("Enter ID to delete: ");
                 userInput = Utils.readInputs("", messages).get(0);
-                Utils.deleteData(SESSION_FILE, userInput);
+                Utils.deleteData(BOOKING_FILE, userInput);
                 break;
 
             case CUSTOMER:
-                // Utils.listAllData(FEEDBACK_FILE);
+                searchMyData(accountType);
                 messages.add("Enter ID to delete: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 Utils.deleteData(FEEDBACK_FILE, userInput);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void searchMyData(AccountType accountType) {
+        String userId = Context.getInstance().getCurrUserId();
+
+        switch (accountType) {
+            case TRAINER:
+                Utils.searchData(BOOKING_FILE, userId).forEach(System.out::println);
+                break;
+
+            case CUSTOMER:
+                Utils.searchData(FEEDBACK_FILE, userId).forEach(System.out::println);
                 break;
 
             default:

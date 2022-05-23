@@ -3,8 +3,6 @@ package project;
 import java.io.*;
 import java.util.*;
 
-import project.domain.enums.AccountType;
-
 public class Utils {
     private static final Scanner sc = new Scanner(System.in);
 
@@ -18,14 +16,13 @@ public class Utils {
         List<List<String>> lines = new ArrayList<List<String>>();
 
         try (Scanner scanner = new Scanner(new File(filePath))) {
-            // scanner.useDelimiter("\n");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 lines.add(Arrays.asList(line.trim().split("\\s*,\\s*")));
             }
 
         } catch (FileNotFoundException e) {
-            System.err.println("File was not found. Make sure the file exist.");
+            System.err.println("File was not found. Make sure the file exists.");
             System.err.println("Message: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("File could not be opened.");

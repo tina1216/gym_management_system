@@ -100,15 +100,16 @@ public class Controller {
                 service.createSession();
                 break;
             case 3:
-                // display sessions
+                // view sessions
+                service.listAllInfo(AccountType.TRAINER);
                 break;
             case 4:
                 // update session
-                service.updateInfo();
+                service.updateInfo(AccountType.TRAINER);
                 break;
             case 5:
                 // delete session
-                service.deleteInfo();
+                service.deleteInfo(AccountType.TRAINER);
                 break;
             case 6:
                 // create feedback for customer
@@ -132,9 +133,12 @@ public class Controller {
                 break;
             case 2:
                 // View my feedback from trainer
+                service.searchMyData(AccountType.CUSTOMER);
                 break;
             case 0:
                 service.logout();
+                break;
+            default:
                 break;
         }
     }

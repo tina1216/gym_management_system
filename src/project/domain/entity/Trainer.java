@@ -62,7 +62,7 @@ public class Trainer extends Person {
         trainer.phoneNumber = inputs.get(4);
         trainer.email = inputs.get(5);
         trainer.role = AccountType.TRAINER.getRole();
-        trainer.trainer_level = Integer.parseInt(input.get(8));
+        trainer.trainer_level = Integer.parseInt(inputs.get(6));
 
         return trainer;
     }

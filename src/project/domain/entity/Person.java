@@ -131,10 +131,4 @@ public class Person {
     public void setRole(String role) {
         this.role = role;
     }
-
-    public String toString() {
-        return this.id + " " + this.username + " " + this.password + " " + this.gender + " " + this.phoneNumber + " "
-                + this.email + " " + this.role;
-    }
-
 }

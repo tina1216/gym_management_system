@@ -246,33 +246,44 @@ public class Service {
     /**
      * displayInfo to show all data from either session.txt or feedback.txt
      */
-    public void displayInfo() {
-
+    public void listAllInfo(AccountType accountType) {
+        switch (accountType) {
+            case TRAINER:
+                Utils.listAllData(SESSION_FILE);
+                break;
+            case CUSTOMER:
+                Utils.listAllData(FEEDBACK_FILE);
+                break;
+            default:
+                break;
+        }
     }
 
-    public void updateInfo() {
+    public void updateInfo(AccountType accountType) {
         List<String> target = null;
         List<String> messages = new ArrayList<String>();
-        String userInput;
+        String userInput, userId;
+        Trainer trainer = new Trainer();
 
-        messages.add("1.Training Session\n2.Feedback\n Select a number above: ");
-        String userChoice = Utils.readInputs("", messages).get(0);
+        switch (accountType) {
+            case TRAINER:
+                // Context.getInstance().getPeople().stream().filter(e ->
+                // username.equals(e.getUsername()) &&password.equals(e.getPassword()))
 
-        switch (Integer.parseInt(userChoice)) {
-            case 1:
-                Utils.listAllData(SESSION_FILE);
+                // trainer = Context.getInstance().getTrainers().filter();
+                // Utils.searchData(SESSION_FILE, userId);
                 messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(SESSION_FILE, userInput);
                 Utils.updateData(SESSION_FILE, target);
                 break;
 
-            case 2:
-                Utils.listAllData(FEEDBACK_FILE);
+            case CUSTOMER:
+                // Utils.searchData(FEEDBACK_FILE, userId);
                 messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
-                target = Utils.searchData(SESSION_FILE, userInput);
-                Utils.updateData(SESSION_FILE, target);
+                target = Utils.searchData(FEEDBACK_FILE, userInput);
+                Utils.updateData(FEEDBACK_FILE, target);
                 break;
 
             default:
@@ -283,18 +294,25 @@ public class Service {
     /**
      * deleteInfo to delete session or feedback
      */
-    public void deleteInfo() {
+    public void deleteInfo(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
-        messages.add("Enter ID to delete: ");
-        String deleteUserId = Utils.readInputs("=========== Delete Account ===========", messages).get(0);
+        String userInput;
 
         switch (accountType) {
-            case MANAGER:
-                Utils.deleteData(MANAGER_FILE, deleteUserId);
-                break;
             case TRAINER:
-                Utils.deleteData(TRAINER_FILE, deleteUserId);
+                // Utils.listAllData(SESSION_FILE);
+                messages.add("Enter ID to delete: ");
+                userInput = Utils.readInputs("", messages).get(0);
+                Utils.deleteData(SESSION_FILE, userInput);
                 break;
+
+            case CUSTOMER:
+                // Utils.listAllData(FEEDBACK_FILE);
+                messages.add("Enter ID to delete: ");
+                userInput = Utils.readInputs("", messages).get(0);
+                Utils.deleteData(FEEDBACK_FILE, userInput);
+                break;
+
             default:
                 break;
         }

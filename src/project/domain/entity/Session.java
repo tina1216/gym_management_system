@@ -3,8 +3,7 @@ package project.domain.entity;
 import java.time.*;
 import java.util.*;
 
-import javax.naming.Context;
-import javax.swing.text.AbstractDocument.Content;
+import project.Context;
 
 import java.text.DateFormat;
 
@@ -18,7 +17,6 @@ public class Session {
     private String bookedDate;
     private String trainerId;
     private String customerId;
-    private String feedbackId;
     private boolean isOver;
 
     public Session() {
@@ -33,7 +31,6 @@ public class Session {
         this.bookedDate = bookedDate;
         this.trainerId = trainerId;
         this.customerId = customerId;
-        this.feedbackId = feedbackId;
         this.isOver = isOver;
     }
 
@@ -49,8 +46,7 @@ public class Session {
         this.bookedDate = line[3];
         this.trainerId = line[4];
         this.customerId = line[5];
-        this.feedbackId = line[6];
-        this.isOver = Boolean.parseBoolean(line[7]);
+        this.isOver = Boolean.parseBoolean(line[6]);
     }
 
     /**
@@ -67,8 +63,7 @@ public class Session {
         session.bookedDate = inputs.get(2);
         session.trainerId = inputs.get(3);
         session.customerId = inputs.get(4);
-        session.feedbackId = inputs.get(5);
-        session.isOver = Boolean.parseBoolean(inputs.get(6));
+        session.isOver = Boolean.parseBoolean(inputs.get(5));
 
         return session;
     }
@@ -86,7 +81,7 @@ public class Session {
 
         data.addAll(new ArrayList<String>(
                 Arrays.asList(String.valueOf(id), dateCreated, String.valueOf(duration), bookedDate, trainerId,
-                        customerId, feedbackId, String.valueOf(isOver))));
+                        customerId, String.valueOf(isOver))));
         return data;
     }
 
@@ -108,9 +103,8 @@ public class Session {
     }
 
     public String getTrainerId() {
-        // Context.getInstance().getCustomer() して、
-        // filter で id 検索かけて（findByCode）して
-        // return は Trainer
+        // Context.getInstance().getCustomers()
+        // .filter(t -> t.findByCode().getCustomerId());
 
         return trainerId;
     }
@@ -119,13 +113,10 @@ public class Session {
         // Context.getInstance().getCustomer() して、
         // filter で id 検索かけて（findByCode）して
         // return は Customer
+
         // Customer customer = Context.getInstance().getCustomers()
         // .filter(customers -> customers.findByCode().getCustomerId());
         return customerId;
-    }
-
-    public String getFeedbackId() {
-        return feedbackId;
     }
 
     public boolean getIsOver() {
@@ -154,10 +145,6 @@ public class Session {
 
     public void setCustomer(String customerId) {
         this.customerId = customerId;
-    }
-
-    public void setFeedbackId(String feedbackId) {
-        this.feedbackId = feedbackId;
     }
 
     public void setOver(boolean isOver) {

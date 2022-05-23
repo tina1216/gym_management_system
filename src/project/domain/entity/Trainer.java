@@ -34,6 +34,18 @@ public class Trainer extends Person {
         this.trainer_level = Integer.parseInt(line[8]);
     }
 
+    public Trainer(List<String> input) {
+        this.id = input.get(0);
+        this.username = input.get(1);
+        this.password = input.get(2);
+        this.fullName = input.get(3);
+        this.gender = input.get(4);
+        this.phoneNumber = input.get(5);
+        this.email = input.get(6);
+        this.role = input.get(7);
+        this.trainer_level = Integer.parseInt(input.get(8));
+    }
+
     /**
      * generateTrainer for new customer account
      * 
@@ -49,7 +61,8 @@ public class Trainer extends Person {
         trainer.gender = inputs.get(3);
         trainer.phoneNumber = inputs.get(4);
         trainer.email = inputs.get(5);
-        trainer.role = AccountType.MANAGER.getRole();
+        trainer.role = AccountType.TRAINER.getRole();
+        trainer.trainer_level = Integer.parseInt(input.get(8));
 
         return trainer;
     }

@@ -30,6 +30,17 @@ public class Manager extends Person {
         this.role = line[7];
     }
 
+    public Manager(List<String> input) {
+        this.id = input.get(0);
+        this.username = input.get(1);
+        this.password = input.get(2);
+        this.fullName = input.get(3);
+        this.gender = input.get(4);
+        this.phoneNumber = input.get(5);
+        this.email = input.get(6);
+        this.role = input.get(7);
+    }
+
     /**
      * generateManager for new customer account
      * 

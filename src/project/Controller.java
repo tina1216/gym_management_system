@@ -104,9 +104,11 @@ public class Controller {
                 break;
             case 4:
                 // update session
+                service.updateInfo();
                 break;
             case 5:
                 // delete session
+                service.deleteInfo();
                 break;
             case 6:
                 // create feedback for customer

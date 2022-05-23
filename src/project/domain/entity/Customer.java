@@ -46,6 +46,21 @@ public class Customer extends User {
         this.isPaid = Boolean.parseBoolean(line[11]);
     }
 
+    public Customer(List<String> input) {
+        this.id = input.get(0);
+        this.username = input.get(1);
+        this.password = input.get(2);
+        this.fullName = input.get(3);
+        this.gender = input.get(4);
+        this.phoneNumber = input.get(5);
+        this.email = input.get(6);
+        this.role = input.get(7);
+        this.customer_date_joined = LocalDate.parse(input.get(8)).toString();
+        this.height = Double.parseDouble(input.get(9));
+        this.weight = Double.parseDouble(input.get(10));
+        this.isPaid = Boolean.parseBoolean(input.get(11));
+    }
+
     /**
      * generateCustomer for new customer account
      * 
@@ -72,6 +87,7 @@ public class Customer extends User {
 
     // getters & setters
     // -------------------------------------------------------------
+
     public String getCustomer_date_joined() {
         return customer_date_joined;
     }

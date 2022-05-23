@@ -10,12 +10,12 @@ public class Context {
 
     private static Context instance = new Context();
     private static AccountType accountType;// never change after logged in
+    private User user;
 
     private List<Manager> managers;
     private List<Trainer> trainers;
     private List<Customer> customers;
     private List<Person> people;
-    private User user;
 
     private Context() {
 
@@ -26,8 +26,8 @@ public class Context {
     }
 
     // -----------------------------------------------------------------
-    public Person getCurrUserId() {
-
+    public User getCurrentUser() {
+        return user;
     }
 
     public static Context getInstance() {

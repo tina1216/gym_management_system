@@ -2,10 +2,7 @@ package project;
 
 import project.domain.entity.*;
 import project.domain.enums.*;
-import java.io.*;
-import java.time.*;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Service {
@@ -14,7 +11,7 @@ public class Service {
     public final static String MANAGER_FILE = "src/resources/manager.txt";
     public final static String TRAINER_FILE = "src/resources/trainer.txt";
     public final static String CUSTOMER_FILE = "src/resources/customer.txt";
-    public final static String BOOKING_FILE = "src/resources/session.txt";
+    public final static String BOOKING_FILE = "src/resources/Booking.txt";
     public final static String FEEDBACK_FILE = "src/resources/feedback.txt";
 
     /**
@@ -95,13 +92,13 @@ public class Service {
     public void listAllAccounts(AccountType accountType) {
         switch (accountType) {
             case MANAGER:
-                Utils.listAllData(MANAGER_FILE);
+                Utils.listAllData(MANAGER_FILE).forEach(System.out::println);
                 break;
             case TRAINER:
-                Utils.listAllData(TRAINER_FILE);
+                Utils.listAllData(TRAINER_FILE).forEach(System.out::println);
                 break;
             case CUSTOMER:
-                Utils.listAllData(CUSTOMER_FILE);
+                Utils.listAllData(CUSTOMER_FILE).forEach(System.out::println);
                 break;
             default:
                 break;
@@ -226,9 +223,9 @@ public class Service {
 
     // -------------------------------------------------------------
     /**
-     * createSession
+     * createBooking
      */
-    public void createSession() {
+    public void createBooking() {
 
         List<String> attributes = new ArrayList<String>();
         // id
@@ -236,14 +233,14 @@ public class Service {
         attributes.add("duration");
         attributes.add("booked date");
         attributes.add("customer ID");
-        attributes.add("trainer ID");
+        // attributes.add("trainer ID");
 
         List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
                 .collect(Collectors.toList());
 
         List<String> inputs = Utils.readInputs("=========== Create New Booking ===========", messages);
 
-        Utils.createData(BOOKING_FILE, new Session().addSession(inputs).writeData());
+        Utils.createData(BOOKING_FILE, new Booking().addBooking(inputs).writeData());
     }
 
     /**
@@ -254,9 +251,8 @@ public class Service {
         // id
         // dateAdded
         attributes.add("comment");
-        attributes.add("trainer ID");
+        // attributes.add("trainer ID");
         attributes.add("customer ID");
-        attributes.add("session ID");
 
         List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
                 .collect(Collectors.toList());
@@ -267,15 +263,15 @@ public class Service {
     }
 
     /**
-     * displayInfo to show all data from either session.txt or feedback.txt
+     * displayInfo to show all data from either Booking.txt or feedback.txt
      */
     public void listAllInfo(AccountType accountType) {
         switch (accountType) {
             case TRAINER:
-                Utils.listAllData(BOOKING_FILE);
+                Utils.listAllData(BOOKING_FILE).forEach(System.out::println);
                 break;
             case CUSTOMER:
-                Utils.listAllData(FEEDBACK_FILE);
+                Utils.listAllData(FEEDBACK_FILE).forEach(System.out::println);
                 break;
             default:
                 break;
@@ -289,7 +285,7 @@ public class Service {
 
         switch (accountType) {
             case TRAINER:
-                userId = Context.getInstance().getCurrUserId();
+                userId = Context.getInstance().getCurrentUser().getId();
                 Utils.searchData(BOOKING_FILE, userId);
                 messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
@@ -298,7 +294,7 @@ public class Service {
                 break;
 
             case CUSTOMER:
-                userId = Context.getInstance().getCurrUserId();
+                userId = Context.getInstance().getCurrentUser().getId();
                 messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(FEEDBACK_FILE, userInput);
@@ -311,7 +307,7 @@ public class Service {
     }
 
     /**
-     * deleteInfo to delete session or feedback
+     * deleteInfo to delete Booking or feedback
      */
     public void deleteInfo(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
@@ -338,7 +334,7 @@ public class Service {
     }
 
     public void searchMyData(AccountType accountType) {
-        String userId = Context.getInstance().getCurrUserId();
+        String userId = Context.getInstance().getCurrentUser().getId();
 
         switch (accountType) {
             case TRAINER:

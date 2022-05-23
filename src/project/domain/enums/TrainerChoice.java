@@ -5,11 +5,12 @@ import java.util.Arrays;
 // when trainer loggedin
 public enum TrainerChoice {
 
-    UPDATE_CUSTOMER_PROFILE(1, "Update customer's individual profile"),
-    APPOINT_MANAGEMENT(2, "Individual appointment management"),
-    UPDATE_CUSTOMER_PAYMENT(3, "Update customer's payment status"),
-    GIVE_FEEDBACK(4, "Give feedback to customer"),
-    BACK_TO_MENU(5, "Back to Menu page");
+    UPDATE_CUSTOMER_PROFILE(1, "Update customer's profile"),
+    LIST_BOOKING(2, "List down all booking"),
+    UPDATE_BOOKING(3, "Update booking"),
+    DELETE_BOOKING(4, "Delete booking"),
+    CREATE_FEEDBACK(5, "Create feedback for customer"),
+    LOGOUT(0, "Logout");
 
     private int code;
     private String msg;

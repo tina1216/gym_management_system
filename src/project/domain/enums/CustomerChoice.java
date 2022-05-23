@@ -6,8 +6,9 @@ import java.util.Arrays;
 public enum CustomerChoice {
 
     VIEW_MY_PROFILE(1, "View my profile"),
-    VIEW_MY_FEEDBACK(2, "View my feedback from trainer"),
-    BACK_TO_MENU(5, "Back to Menu page");
+    CREATE_BOOKING(2, "Create booking"),
+    VIEW_MY_FEEDBACK(3, "View my feedback from trainer"),
+    LOGOUT(0, "Logout");
 
     private int code;
     private String msg;

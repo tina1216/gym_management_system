@@ -1,7 +1,6 @@
 package project.domain.enums;
 
 import java.util.Arrays;
-import project.domain.enums.AccountType;
 
 // when user loggedin
 public enum ManagerChoice {

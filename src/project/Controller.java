@@ -84,6 +84,7 @@ public class Controller {
                 service.logout();
                 break;
             default:
+                menu();
                 break;
         }
     }
@@ -96,22 +97,18 @@ public class Controller {
                 service.updateAccount(AccountType.CUSTOMER);
                 break;
             case 2:
-                // Create session
-                service.createSession();
-                break;
-            case 3:
-                // view sessions
+                // view Bookings
                 service.listAllInfo(AccountType.TRAINER);
                 break;
-            case 4:
-                // update session
+            case 3:
+                // update Booking
                 service.updateInfo(AccountType.TRAINER);
                 break;
-            case 5:
-                // delete session
+            case 4:
+                // delete Booking
                 service.deleteInfo(AccountType.TRAINER);
                 break;
-            case 6:
+            case 5:
                 // create feedback for customer
                 service.createFeedback();
                 break;
@@ -132,6 +129,10 @@ public class Controller {
                 service.searchAccount(AccountType.CUSTOMER);
                 break;
             case 2:
+                // Create Booking
+                service.createBooking();
+                break;
+            case 3:
                 // View my feedback from trainer
                 service.searchMyData(AccountType.CUSTOMER);
                 break;
@@ -139,6 +140,7 @@ public class Controller {
                 service.logout();
                 break;
             default:
+                menu();
                 break;
         }
     }

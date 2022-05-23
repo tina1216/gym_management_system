@@ -2,6 +2,9 @@ package project.domain.entity;
 
 import java.time.*;
 import java.util.*;
+
+import project.Context;
+
 import java.text.DateFormat;
 
 public class Feedback {
@@ -13,24 +16,22 @@ public class Feedback {
     private String comment;
     private String trainerId;
     private String customerId;
-    private String sessionId;
 
     public Feedback() {
 
     }
 
-    public Feedback(String id, String dateCreated, String comment, String trainerId, String customerId,
-            String sessionId) {
+    public Feedback(String id, String dateCreated, String comment, String trainerId, String customerId) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.comment = comment;
         this.trainerId = trainerId;
         this.customerId = customerId;
-        this.sessionId = sessionId;
+
     }
 
     /**
-     * Constructor to read
+     * Constructor to read in
      * 
      * @param line
      */
@@ -40,11 +41,18 @@ public class Feedback {
         this.comment = line[2];
         this.trainerId = line[3];
         this.customerId = line[4];
-        this.sessionId = line[5];
+    }
+
+    public Feedback(List<String> input) {
+        this.id = input.get(0);
+        this.dateCreated = input.get(1);
+        this.comment = input.get(2);
+        this.trainerId = input.get(3);
+        this.customerId = input.get(4);
     }
 
     /**
-     * Constructor to insert and update
+     * Constructor to create feedback
      * 
      * @param inputs
      */
@@ -52,11 +60,10 @@ public class Feedback {
         Feedback feedback = new Feedback();
 
         feedback.id = UUID.randomUUID().toString();
-        feedback.dateCreated = DateFormat.getDateInstance().format(LocalDate.now()).toString();
+        feedback.dateCreated = DateFormat.getInstance().format(currentDate).toString();
         feedback.comment = inputs.get(0);
-        feedback.trainerId = inputs.get(1);
-        feedback.customerId = inputs.get(2);
-        feedback.sessionId = inputs.get(3);
+        feedback.trainerId = Context.getInstance().getCurrentUser().getId();
+        feedback.customerId = inputs.get(1);
 
         return feedback;
     }
@@ -67,7 +74,7 @@ public class Feedback {
         List<String> data = new ArrayList<String>();
 
         data.addAll(new ArrayList<String>(
-                Arrays.asList(String.valueOf(id), dateCreated, comment, trainerId, customerId, sessionId)));
+                Arrays.asList(String.valueOf(id), dateCreated, comment, trainerId, customerId)));
         return data;
     }
 
@@ -85,7 +92,7 @@ public class Feedback {
     }
 
     public String getTrainerId() {
-        return trainerId;
+        return trainerId = Context.getInstance().getCurrentUser().getId();
     }
 
     public String getCustomerId() {
@@ -93,10 +100,6 @@ public class Feedback {
         // filter で id 検索かけて（findByCode）して
         // return は Customer
         return customerId;
-    }
-
-    public String getSessiongId() {
-        return sessionId;
     }
 
     public void setId(String id) {
@@ -117,10 +120,6 @@ public class Feedback {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
 }

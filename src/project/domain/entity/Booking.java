@@ -7,7 +7,7 @@ import project.Context;
 
 import java.text.DateFormat;
 
-public class Session {
+public class Booking {
 
     Date currentDate = new Date();
 
@@ -19,11 +19,11 @@ public class Session {
     private String customerId;
     private boolean isOver;
 
-    public Session() {
+    public Booking() {
 
     }
 
-    public Session(String id, String dateCreated, int duration, String bookedDate, String trainerId, String customerId,
+    public Booking(String id, String dateCreated, int duration, String bookedDate, String trainerId, String customerId,
             String feedbackId, boolean isOver) {
         this.id = id;
         this.dateCreated = dateCreated;
@@ -39,7 +39,7 @@ public class Session {
      * 
      * @param line
      */
-    public Session(String[] line) {
+    public Booking(String[] line) {
         this.id = line[0];
         this.dateCreated = line[1];
         this.duration = Integer.parseInt(line[2]);
@@ -50,22 +50,22 @@ public class Session {
     }
 
     /**
-     * Constructor to insert and update
+     * Constructor to creat booking
      * 
      * @param inputs
      */
-    public Session addSession(List<String> inputs) {
-        Session session = new Session();
+    public Booking addBooking(List<String> inputs) {
+        Booking Booking = new Booking();
 
-        session.id = UUID.randomUUID().toString();
-        session.dateCreated = DateFormat.getDateInstance().format(LocalDate.now()).toString();
-        session.duration = Integer.parseInt(inputs.get(1));
-        session.bookedDate = inputs.get(2);
-        session.trainerId = inputs.get(3);
-        session.customerId = inputs.get(4);
-        session.isOver = Boolean.parseBoolean(inputs.get(5));
+        Booking.id = UUID.randomUUID().toString();
+        Booking.dateCreated = DateFormat.getInstance().format(currentDate).toString();
+        Booking.duration = Integer.parseInt(inputs.get(1));
+        Booking.bookedDate = inputs.get(2);
+        Booking.trainerId = inputs.get(3);
+        Booking.customerId = Context.getInstance().getCurrentUser().getId();
+        Booking.isOver = Boolean.parseBoolean(inputs.get(4));
 
-        return session;
+        return Booking;
     }
 
     // -------------------------------------------------------------------------------
@@ -103,9 +103,6 @@ public class Session {
     }
 
     public String getTrainerId() {
-        // Context.getInstance().getCustomers()
-        // .filter(t -> t.findByCode().getCustomerId());
-
         return trainerId;
     }
 
@@ -113,10 +110,7 @@ public class Session {
         // Context.getInstance().getCustomer() して、
         // filter で id 検索かけて（findByCode）して
         // return は Customer
-
-        // Customer customer = Context.getInstance().getCustomers()
-        // .filter(customers -> customers.findByCode().getCustomerId());
-        return customerId;
+        return customerId = Context.getInstance().getCurrentUser().getId();
     }
 
     public boolean getIsOver() {

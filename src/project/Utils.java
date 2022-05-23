@@ -191,7 +191,7 @@ public class Utils {
                 return line;
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     // -------------------------------------------------------------

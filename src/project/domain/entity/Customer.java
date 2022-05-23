@@ -1,7 +1,6 @@
 package project.domain.entity;
 
 import project.domain.enums.AccountType;
-import java.io.*;
 import java.time.*;
 import java.util.*;
 

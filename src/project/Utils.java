@@ -7,7 +7,7 @@ public class Utils {
     private static final Scanner sc = new Scanner(System.in);
 
     /**
-     * scan file to read .txt file
+     * read .txt file
      * 
      * @param filePath
      * @return a list that contains each line from the .txt file
@@ -32,7 +32,7 @@ public class Utils {
     }
 
     /**
-     * read inputs to read user inputs
+     * read user inputs
      * 
      * @param title
      * @param messages
@@ -57,7 +57,7 @@ public class Utils {
     }
 
     /**
-     * clear data to clean up all data in the file
+     * clean up all data in the file
      * 
      * @param filePath
      * @param id
@@ -76,7 +76,7 @@ public class Utils {
     }
 
     /**
-     * create data to create account, appointment and feedback
+     * create account, appointment and feedback
      * 
      * @param filePath
      * @param data
@@ -109,7 +109,7 @@ public class Utils {
     }
 
     /**
-     * delete data to delete account, appointment and feedback
+     * delete account, appointment and feedback
      * 
      * @param filePath
      * @param id
@@ -136,7 +136,7 @@ public class Utils {
     }
 
     /**
-     * listAllData to display all data
+     * display all data
      * 
      * @param filePath
      * @param id

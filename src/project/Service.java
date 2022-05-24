@@ -170,7 +170,7 @@ public class Service {
     }
 
     /**
-     * deleteAccount
+     * delete account
      * 
      * @param accountType
      */
@@ -195,7 +195,7 @@ public class Service {
     }
 
     /**
-     * searchAccount
+     * search account
      * 
      * @param accountType
      */
@@ -224,7 +224,7 @@ public class Service {
 
     // -------------------------------------------------------------
     /**
-     * createBooking
+     * create booking
      */
     public void createBooking() {
 
@@ -245,7 +245,7 @@ public class Service {
     }
 
     /**
-     * createFeedback
+     * create feedback
      */
     public void createFeedback() {
         List<String> attributes = new ArrayList<String>();
@@ -264,7 +264,7 @@ public class Service {
     }
 
     /**
-     * displayInfo to show all data from either Booking.txt or feedback.txt
+     * show all data from either Booking.txt or feedback.txt
      */
     public void listAllInfo(AccountType accountType) {
         switch (accountType) {
@@ -279,6 +279,11 @@ public class Service {
         }
     }
 
+    /**
+     * update booking and feedback
+     * 
+     * @param accountType
+     */
     public void updateInfo(AccountType accountType) {
         List<String> target = null;
         List<String> messages = new ArrayList<String>();
@@ -286,17 +291,17 @@ public class Service {
 
         switch (accountType) {
             case TRAINER:
-                userId = Context.getInstance().getCurrentUser().getId();
-                Utils.searchData(BOOKING_FILE, userId);
-                messages.add("Select ID to update: ");
+                // userId = Context.getInstance().getCurrentUser().getId();
+                // Utils.searchData(BOOKING_FILE, userId);
+                // messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(BOOKING_FILE, userInput);
                 Utils.updateData(BOOKING_FILE, target);
                 break;
 
             case CUSTOMER:
-                userId = Context.getInstance().getCurrentUser().getId();
-                messages.add("Select ID to update: ");
+                // userId = Context.getInstance().getCurrentUser().getId();
+                // messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(FEEDBACK_FILE, userInput);
                 Utils.updateData(FEEDBACK_FILE, target);
@@ -308,7 +313,7 @@ public class Service {
     }
 
     /**
-     * deleteInfo to delete Booking or feedback
+     * delete booking or feedback
      */
     public void deleteInfo(AccountType accountType) {
         List<String> messages = new ArrayList<String>();
@@ -334,16 +339,21 @@ public class Service {
         }
     }
 
+    /**
+     * search data only for the user current logged in
+     * 
+     * @param accountType
+     */
     public void searchMyData(AccountType accountType) {
         String userId = Context.getInstance().getCurrentUser().getId();
 
         switch (accountType) {
             case TRAINER:
-                Utils.searchData(BOOKING_FILE, userId).forEach(System.out::println);
+                Utils.searchData(BOOKING_FILE, userId);
                 break;
 
             case CUSTOMER:
-                Utils.searchData(FEEDBACK_FILE, userId).forEach(System.out::println);
+                Utils.searchData(FEEDBACK_FILE, userId);
                 break;
 
             default:

@@ -140,6 +140,7 @@ public class Service {
         }
     }
 
+    // testing purpose only
     public List<String> askToUpdate(AccountType accountType, String id) {
         List<String> attributes = new ArrayList<String>();
 

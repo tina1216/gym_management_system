@@ -24,9 +24,6 @@ public class Utils {
         } catch (FileNotFoundException e) {
             System.err.println("File was not found. Make sure the file exists.");
             System.err.println("Message: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("File could not be opened.");
-            System.err.println("Message: " + e.getMessage());
         }
         return lines;
     }
@@ -195,5 +192,16 @@ public class Utils {
     }
 
     // -------------------------------------------------------------
+
+    public static List<String> searchById(String filePath, String id) {
+        List<List<String>> data = scanFile(filePath);
+
+        for (List<String> line : data) {
+            if (line.get(4).equals(id)) {
+                return line;
+            }
+        }
+        return Collections.emptyList();
+    }
 
 }

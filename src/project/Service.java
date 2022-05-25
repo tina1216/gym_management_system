@@ -27,6 +27,12 @@ public class Service {
                         password.equals(e.getPassword()))
                 .findFirst()
                 .ifPresent(person -> Context.getInstance().setAccountType(AccountType.fromRole(person.getRole())));
+
+        Context.getInstance().getPeople().stream()
+                .filter(e -> username.equals(e.getUsername()) &&
+                        password.equals(e.getPassword()))
+                .findFirst()
+                .ifPresent(person -> Context.getInstance().setCurrentUserId(person.getId()));
     }
 
     /**
@@ -224,28 +230,32 @@ public class Service {
 
     // -------------------------------------------------------------
     /**
-     * create booking
+     * create booking, it reads duration of training, booked date and trainer id.
      */
     public void createBooking() {
 
-        List<String> attributes = new ArrayList<String>();
-        // id
-        // dateAdded
-        attributes.add("duration");
-        attributes.add("booked date");
-        attributes.add("customer ID");
-        // attributes.add("trainer ID");
+        try {
+            List<String> attributes = new ArrayList<String>();
+            // id
+            // dateAdded
+            attributes.add("duration");
+            attributes.add("booked date");
+            // attributes.add("customer ID");
+            attributes.add("trainer ID");
 
-        List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
-                .collect(Collectors.toList());
+            List<String> messages = attributes.stream().map(attribute -> "Enter " + attribute + ": ")
+                    .collect(Collectors.toList());
 
-        List<String> inputs = Utils.readInputs("=========== Create New Booking ===========", messages);
+            List<String> inputs = Utils.readInputs("=========== Create New Booking ===========", messages);
 
-        Utils.createData(BOOKING_FILE, new Booking().addBooking(inputs).writeData());
+            Utils.createData(BOOKING_FILE, new Booking().addBooking(inputs).writeData());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * create feedback
+     * create feedback for customer, it reads comment and customer ID
      */
     public void createFeedback() {
         List<String> attributes = new ArrayList<String>();
@@ -291,20 +301,23 @@ public class Service {
 
         switch (accountType) {
             case TRAINER:
-                // userId = Context.getInstance().getCurrentUser().getId();
-                // Utils.searchData(BOOKING_FILE, userId);
-                // messages.add("Select ID to update: ");
+                userId = Context.getInstance().getCurrentUserId();
+                Utils.searchData(BOOKING_FILE, userId).forEach(System.out::println);
+
+                messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(BOOKING_FILE, userInput);
-                Utils.updateData(BOOKING_FILE, target);
+                Utils.updateData(BOOKING_FILE, target).forEach(System.out::println);
                 break;
 
             case CUSTOMER:
-                // userId = Context.getInstance().getCurrentUser().getId();
-                // messages.add("Select ID to update: ");
+                userId = Context.getInstance().getCurrentUserId();
+                Utils.searchData(FEEDBACK_FILE, userId).forEach(System.out::println);
+
+                messages.add("Select ID to update: ");
                 userInput = Utils.readInputs("", messages).get(0);
                 target = Utils.searchData(FEEDBACK_FILE, userInput);
-                Utils.updateData(FEEDBACK_FILE, target);
+                Utils.updateData(FEEDBACK_FILE, target).forEach(System.out::println);
                 break;
 
             default:
@@ -345,15 +358,37 @@ public class Service {
      * @param accountType
      */
     public void searchMyData(AccountType accountType) {
-        String userId = Context.getInstance().getCurrentUser().getId();
+        String userId = Context.getInstance().getCurrentUserId();
 
         switch (accountType) {
             case TRAINER:
-                Utils.searchData(BOOKING_FILE, userId);
+                Utils.searchById(BOOKING_FILE, userId).forEach(System.out::println);
                 break;
 
             case CUSTOMER:
-                Utils.searchData(FEEDBACK_FILE, userId);
+                Utils.searchById(FEEDBACK_FILE, userId).forEach(System.out::println);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * search profile by current user id and return the result
+     * 
+     * @param accountType
+     */
+    public void searchMyProfile(AccountType accountType) {
+        String userId = Context.getInstance().getCurrentUserId();
+
+        switch (accountType) {
+            case TRAINER:
+                Utils.searchById(TRAINER_FILE, userId).forEach(System.out::println);
+                break;
+
+            case CUSTOMER:
+                Utils.searchById(CUSTOMER_FILE, userId).forEach(System.out::println);
                 break;
 
             default:

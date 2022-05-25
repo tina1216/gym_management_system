@@ -5,8 +5,6 @@ import java.util.*;
 
 import project.Context;
 
-import java.text.DateFormat;
-
 public class Feedback {
 
     Date currentDate = new Date();
@@ -60,9 +58,9 @@ public class Feedback {
         Feedback feedback = new Feedback();
 
         feedback.id = UUID.randomUUID().toString();
-        feedback.dateCreated = DateFormat.getInstance().format(currentDate).toString();
+        feedback.dateCreated = LocalDate.now().toString();
         feedback.comment = inputs.get(0);
-        feedback.trainerId = Context.getInstance().getCurrentUser().getId();
+        feedback.trainerId = Context.getInstance().getCurrentUserId();
         feedback.customerId = inputs.get(1);
 
         return feedback;
@@ -74,7 +72,7 @@ public class Feedback {
         List<String> data = new ArrayList<String>();
 
         data.addAll(new ArrayList<String>(
-                Arrays.asList(String.valueOf(id), dateCreated, comment, trainerId, customerId)));
+                Arrays.asList(String.valueOf(id), String.valueOf(dateCreated), comment, trainerId, customerId)));
         return data;
     }
 
@@ -92,7 +90,7 @@ public class Feedback {
     }
 
     public String getTrainerId() {
-        return trainerId = Context.getInstance().getCurrentUser().getId();
+        return trainerId = Context.getInstance().getCurrentUserId();
     }
 
     public String getCustomerId() {

@@ -98,7 +98,7 @@ public class Controller {
                 break;
             case 2:
                 // view Bookings
-                service.listAllInfo(AccountType.TRAINER);
+                service.searchMyData(AccountType.TRAINER);
                 break;
             case 3:
                 // update Booking
@@ -126,7 +126,7 @@ public class Controller {
         switch (choice) {
             case 1:
                 // View my profile
-                service.searchAccount(AccountType.CUSTOMER);
+                service.searchMyProfile(AccountType.CUSTOMER);
                 break;
             case 2:
                 // Create Booking

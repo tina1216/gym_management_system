@@ -5,8 +5,6 @@ import java.util.*;
 
 import project.Context;
 
-import java.text.DateFormat;
-
 public class Booking {
 
     Date currentDate = new Date();
@@ -17,7 +15,7 @@ public class Booking {
     private String bookedDate;
     private String trainerId;
     private String customerId;
-    private boolean isOver;
+    private boolean isOver = false;
 
     public Booking() {
 
@@ -41,9 +39,9 @@ public class Booking {
      */
     public Booking(String[] line) {
         this.id = line[0];
-        this.dateCreated = line[1];
+        this.dateCreated = LocalDate.parse(line[1]).toString();
         this.duration = Integer.parseInt(line[2]);
-        this.bookedDate = line[3];
+        this.bookedDate = LocalDate.parse(line[3]).toString();
         this.trainerId = line[4];
         this.customerId = line[5];
         this.isOver = Boolean.parseBoolean(line[6]);
@@ -58,11 +56,11 @@ public class Booking {
         Booking Booking = new Booking();
 
         Booking.id = UUID.randomUUID().toString();
-        Booking.dateCreated = DateFormat.getInstance().format(currentDate).toString();
+        Booking.dateCreated = LocalDate.now().toString();
         Booking.duration = Integer.parseInt(inputs.get(1));
-        Booking.bookedDate = inputs.get(2);
+        Booking.bookedDate = inputs.get(2).toString();
         Booking.trainerId = inputs.get(3);
-        Booking.customerId = Context.getInstance().getCurrentUser().getId();
+        Booking.customerId = Context.getInstance().getCurrentUserId();
         Booking.isOver = Boolean.parseBoolean(inputs.get(4));
 
         return Booking;
@@ -70,17 +68,12 @@ public class Booking {
 
     // -------------------------------------------------------------------------------
 
-    /**
-     * Date currentDate = new Date();
-     * dateToStr = DateFormat.getDateInstance().format(currentDate);
-     * System.out.println("Date Format using getDateInstance(): "+ dateToStr);
-     */
-
     public List<String> writeData() {
         List<String> data = new ArrayList<String>();
 
         data.addAll(new ArrayList<String>(
-                Arrays.asList(String.valueOf(id), dateCreated, String.valueOf(duration), bookedDate, trainerId,
+                Arrays.asList(String.valueOf(id), dateCreated, String.valueOf(duration), String.valueOf(bookedDate),
+                        trainerId,
                         customerId, String.valueOf(isOver))));
         return data;
     }
@@ -110,7 +103,7 @@ public class Booking {
         // Context.getInstance().getCustomer() して、
         // filter で id 検索かけて（findByCode）して
         // return は Customer
-        return customerId = Context.getInstance().getCurrentUser().getId();
+        return customerId = Context.getInstance().getCurrentUserId();
     }
 
     public boolean getIsOver() {

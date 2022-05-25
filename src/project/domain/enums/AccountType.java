@@ -8,14 +8,14 @@ public enum AccountType {
     TRAINER("T"),
     CUSTOMER("C");
 
-    private String role;
+    private final String role;
 
     private AccountType(String role) {
         this.role = role;
     }
 
     public static AccountType fromRole(String role) {
-        return Arrays.stream(AccountType.values()).filter(accoutType -> accoutType.getRole().equals(role))
+        return Arrays.stream(AccountType.values()).filter(accountType -> accountType.getRole().equals(role))
                 .findFirst().orElse(null);
     }
 

@@ -8,26 +8,28 @@ import project.domain.entity.*;
 
 public class Context {
 
-    private static Context instance = new Context();
+    private static final Context instance = new Context();
     private static AccountType accountType;// never change after logged in
-    private User user;
 
     private List<Manager> managers;
     private List<Trainer> trainers;
     private List<Customer> customers;
     private List<Person> people;
+    private static Person currentPerson;
+    private static String currentUserId;
 
     private Context() {
 
     }
 
-    private Context(User user) {
-        this.user = user;
+    // -----------------------------------------------------------------
+
+    public String getCurrentUserId() {
+        return currentUserId;
     }
 
-    // -----------------------------------------------------------------
-    public User getCurrentUser() {
-        return user;
+    public void setCurrentUserId(String currentUserId) {
+        Context.currentUserId = currentUserId;
     }
 
     public static Context getInstance() {
